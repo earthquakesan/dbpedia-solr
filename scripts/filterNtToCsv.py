@@ -6,6 +6,7 @@ import csv
 parser = RDF.NTriplesParser()
 csvwriter = csv.writer(sys.stdout, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
+print "id\tcomment_en"
 for line in sys.stdin:
     if line.startswith("#"):
         #skip comments

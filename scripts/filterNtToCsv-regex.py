@@ -8,10 +8,16 @@ triplePattern = '<(.*)> <(.*)> "(.*)"'
 tripleMatcher = re.compile(triplePattern)
 
 # this reads in one line at a time from stdin
+print "<add>"
 for line in sys.stdin:
     if line.startswith("#"):
         #skip comments
         continue
 
     matched = tripleMatcher.match(line)
-    print "%s, \"%s\"" % (matched.groups()[0], matched.groups()[2],)
+    print "<doc>"
+    print '<field name="id">' + matched.groups()[0] + '</field>'
+    print '<field name="comment_en">' + matched.groups()[2] + '</field>'
+    print "<doc>"
+
+print "</add>"
