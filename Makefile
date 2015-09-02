@@ -4,7 +4,18 @@ default:
 convert:
 	rm data/short-abstracts_en.csv
 	echo "id,comment_en" >> data/short-abstracts_en.csv
-	head -10 data/short-abstracts_en.nt | scripts/filterNtToCsv.py >> data/short-abstracts_en.csv
+	cat data/short-abstracts_en.nt | scripts/filterNtToCsv-regex.py >> data/short-abstracts_en.csv
+
+benchmark-convert:
+	echo "Benchmarking python filter: 10000 lines/triples (Slow)"
+	echo "id,comment_en" >> data/short-abstracts_en.csv
+	head -10000 data/short-abstracts_en.nt | time scripts/filterNtToCsv.py 1> data/short-abstracts_en-10000.csv 2> pythonFilter.bench
+	rm data/short-abstracts_en-10000.csv
+
+	echo "Benchmarking string filter: 10000 lines/triples (Fast)"
+	echo "id,comment_en" >> data/short-abstracts_en-10000.csv
+	head -10000 data/short-abstracts_en.nt | time scripts/filterNtToCsv-regex.py 1> data/short-abstracts_en-10000.csv 2> pythonFilter-regex.bench
+	rm data/short-abstracts_en-10000.csv
 
 run-solr: remove-dbpedia-core
 	solr/bin/solr start

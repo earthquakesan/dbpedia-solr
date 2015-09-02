@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-
-# a simple filter that prepends line numbers
 import sys
 import RDF
 import csv
@@ -8,7 +6,6 @@ import csv
 parser = RDF.NTriplesParser()
 csvwriter = csv.writer(sys.stdout, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
-# this reads in one line at a time from stdin
 for line in sys.stdin:
     if line.startswith("#"):
         #skip comments
@@ -23,5 +20,3 @@ for line in sys.stdin:
             objectString = statement.object.literal[0].encode('utf-8')
 
         csvwriter.writerow([subjectString, objectString])
-    #lineno += 1
-    #print '{:>6} {}'.format(lineno, line[:-1])
