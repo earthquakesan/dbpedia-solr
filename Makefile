@@ -15,9 +15,9 @@ benchmark-convert:
 	rm data/short-abstracts_en-10000.xml
 
 run-solr: remove-dbpedia-core
-	solr/bin/solr start
+	solr/bin/solr start -m 8G
 	solr/bin/solr create_core -c dbpedia-abstracts-solr -d solr/server/solr/configsets/basic_configs
-	solr/bin/post -c dbpedia-abstracts-solr data/short-abstracts_en.csv
+	solr/bin/post -c dbpedia-abstracts-solr data/short-abstracts_en.xml
 
 stop-solr:
 	solr/bin/solr stop
